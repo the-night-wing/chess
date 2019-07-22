@@ -1,34 +1,26 @@
 import React, {Component} from 'react';
+import {DndProvider} from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
+
 import './App.css';
 
 import Board from "../board"
+
+import {canMoveKnight} from "../../helpers/canMoveKnight.js"
 
 
 export default class App extends Component {
 
   state = {
-    knightPosition : [0, 0]
+    knightPosition : [0, 1]
   }
 
-  setPosition = (x, y) => {
-    this.setState( (state) => {
-      if(
-          (
-            ( Math.abs(x - state.knightPosition[0]) === 1 ) 
-          && 
-            ( Math.abs(y - state.knightPosition[1]) === 2 )
-          ) ||
-          (
-            ( Math.abs(x - state.knightPosition[0]) === 2 ) 
-          && 
-            ( Math.abs(y - state.knightPosition[1]) === 1 )
-          )
-        ){
-          return({
-            knightPosition : [x, y]
-          })
-        }
-    })
+  setPosition = (toX, toY) => {
+    if (canMoveKnight(toX, toY, this.state.knightPosition)) {
+      this.setState({
+        knightPosition : [toX, toY]
+      })
+    }
   }
 
   render(){
@@ -36,12 +28,17 @@ export default class App extends Component {
     const { knightPosition } = this.state;
 
     return (
-      <Board 
-        knightPosition={knightPosition} 
-        onSquareClick={(x, y) => this.setPosition( x, y )}  
-      />
+      
+      <DndProvider
+      backend={HTML5Backend}
+      >
+        <Board 
+          knightPosition={knightPosition} 
+          onSquareClick={(x, y) => this.setPosition( x, y )}  
+        />
+      
+      </DndProvider>
     );
   }
   
 }
-

@@ -1,4 +1,10 @@
-.square{
+/* .square{
     width: 12.5%;
-    height : 12.5%;
+    height: 12.5%;
+} */
+
+.square{
+    width: 100%;
+    height: 100%;
+    
 }

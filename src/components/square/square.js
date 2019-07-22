@@ -2,14 +2,13 @@ import React from 'react'
 
 import "./square.css"
 
-const Square = ({black, children, setPosition}) => {
+const Square = ({black, children}) => {
 
     const sqColor = black ? "black" : "white"
     const pieceColor = !black ? "black" : "white"
 
     return (
         <div 
-            onClick={setPosition}
             className={`square`}
             style={
                 {
